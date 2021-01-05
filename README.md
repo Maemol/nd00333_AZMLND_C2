@@ -1,12 +1,12 @@
-# Udacity Project : Operationalizing Machine Learning
+# Udacity Project: Operationalizing Machine Learning
 
 In this project, we are going to explore Azure AutoML from training to inference and the use of a Pipeline to encapsulate an autoML run.
 
-The dataset we are using is a dataset from a bank marketing campaign. You can find more information here : https://archive.ics.uci.edu/ml/datasets/Bank+Marketing
+The dataset we are using is a dataset from a bank marketing campaign. You can find more information here: https://archive.ics.uci.edu/ml/datasets/Bank+Marketing
 
 This a classification problem, the target feature is the column 'y'. It's a binary classification (Yes or No).
 
-There are 10 input features :
+There are 10 input features:
 ![Dataset preview](/img/Dataset_preview.png)
 
 ## Architectural Diagram
@@ -15,7 +15,7 @@ The architecture we are going to use to train and deploy a model that can predic
 
 ![AutoML Architecture for this project](/img/AutoML_Architecture.png)
 
-If we zoom inside the AutoML part, there is a nice summary diagram in the Azure AutoML documentation : https://docs.microsoft.com/en-us/azure/machine-learning/concept-automated-ml 
+If we zoom inside the AutoML part, there is a nice summary diagram in the Azure AutoML documentation: https://docs.microsoft.com/en-us/azure/machine-learning/concept-automated-ml 
 
 ![AutoML process](/img/automl-concept-diagram.png)
 
@@ -190,7 +190,7 @@ This wrapped up the process of training with AutoML and deploy it in order to ma
 
 We now want to make a Pipeline object to encapsulate the AutoML training we did manualy earlier.
 
-The pipeline will only have one step named autml_module:
+The pipeline will only have one step named automl_module:
 
     automl_step = AutoMLStep(
     name='automl_module',
@@ -203,7 +203,7 @@ In this step we call automl_config. This configuration is similar to the one we 
     automl_settings = {
         "experiment_timeout_minutes": 20,
         "max_concurrent_iterations": 5,
-        "primary_metric" : 'AUC_weighted'
+        "primary_metric": 'AUC_weighted'
     }
     automl_config = AutoMLConfig(compute_target=compute_target,
                                  task = "classification",
@@ -263,10 +263,23 @@ That conclude this project, everything is pretty straightforward and the interac
 
 ## Screen Recording
 
+5 minutes video of the project:
+
 https://youtu.be/Vt-t9fgTnKw
 
 
 ## How to improve
 
+Here are a few things we could have done to improve this workflow.
+
+The training part could obviously be improved, it wasn't the focus of the project so we didn't take the time to look at way to improve the model. Some hyperparameters tuning would improve the model performance.
+
+The pipeline is really simple, it only takes one step. It works because AutoML do a lot of data preparation work before starting to train the models. But we could take more control over the data prep and add data preparation steps in the pipeline.
+
+We could add a step of hyperparameters tuning via Hyperdrive on the best model find by AutoML.
+
+The deployment of the best model could also be a part of the pipeline to replace the model in production linked to our endpoint if the metrics are better than the one in production.
+
+We could also have tested our deployment locally instead of creating an ACI in order to test things with less cost and more flexibility. More information can be found here: https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-package-models
 
 
