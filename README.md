@@ -265,7 +265,10 @@ That conclude this project, everything is pretty straightforward and the interac
 
 5 minutes video of the project:
 
-https://youtu.be/Vt-t9fgTnKw
+[![Watch the video](/img/video.png)](https://youtu.be/Vt-t9fgTnKw)
+
+
+Link: https://youtu.be/Vt-t9fgTnKw
 
 
 ## How to improve
